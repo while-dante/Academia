@@ -27,7 +27,7 @@ Services:
     -logout() : void
 
 -UserService -> Metodos:
-    -register(string $userName, string $password, string $name) : Bool
+    -register(string $userId, string $name, string $password) : Bool
     -getUser(string $userId) : User
 
 -PostService -> Metodos:

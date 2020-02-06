@@ -1,0 +1,18 @@
+{
+    "name": "academia/tuiter",
+    "description": "Este es nuestro Tuiter colaborativo",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Tuiter\\": "src/",
+            "TestTuiter\\": "tests/"
+        }
+    },
+    "require": {
+        "slim/slim": "*",
+        "slim/psr7": "*",
+        "mongodb/mongodb": "*",
+        "phpunit/phpunit": "*",
+        "twig/twig": "^3.0"
+    }
+}

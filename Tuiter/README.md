@@ -42,7 +42,7 @@ Services:
 
 -LikeService -> Metodos:
     -like(User, Post) : Bool
-    -countLikes(Post) : int
+    -count(Post) : int
               
 Actors:
 

@@ -10,7 +10,10 @@ final class FollowServiceTest extends \PHPUnit\Framework\TestCase {
         $connection = new \MongoDB\Client("mongodb://localhost");
         $collection = $connection->FollowServiceTest->FollowTest;
         $collection->drop();
-        $this->fs= new \Tuiter\Services\FollowService($collection);
+        $collectionUserService  = $connection->FollowServiceTest->UserService;
+        $collectionUserService->drop();
+        $this->us = new \Tuiter\Services\UserService($collectionUserService);
+        $this->fs = new \Tuiter\Services\FollowService($collection, $this->us);
     }
 
     public function testClassExists(){
@@ -18,6 +21,12 @@ final class FollowServiceTest extends \PHPUnit\Framework\TestCase {
     }
     
     public function testFollow(){
+        $eliel = new \Tuiter\Models\User("eliel", "Heber", "1234");
+        $edu = new \Tuiter\Models\User("edu", "Edward", "1234");
+        
+        $this->us->register("eliel", "Heber", "123456");
+        $this->us->register("edu", "Edward", "123456");
+        
         $this->assertTrue($this->fs->follow("eliel","edu"));
         $this->assertFalse($this->fs->follow("eliel","edu"));
     }

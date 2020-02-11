@@ -30,5 +30,13 @@ class LoginService {
         }
         return $user;
     }
+
+    public function getLoggedUser() {
+        if (isset($_SESSION['login']) && $_SESSION['login'] == True) {
+            $user = $this->userService->getUser($_SESSION['user']);
+            return $user;
+        }
+        return new \Tuiter\Models\UserNull("", "", "");
+    }
     
 }

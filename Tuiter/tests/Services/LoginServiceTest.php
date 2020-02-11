@@ -97,4 +97,27 @@ final class LoginServiceTest extends TestCase{
         $this->assertTrue(empty($_SESSION['login']));
         $this->assertTrue(empty($_SESSION['user']));
     }
+
+    public function testGetLoggedUser() {
+        $userService = $this->createMock(UserService::class);
+        $userx = new User('Coco', 'Pepe Ventilete', '123456');
+        $userService->method('getUser')->willReturn($userx);
+
+        $ls = new \Tuiter\Services\LoginService($userService);
+        $loginUser = $ls->login("Coco", "123456");
+        $this->assertFalse($loginUser instanceof \Tuiter\Models\UserNull);
+
+        $user = $ls->getLoggedUser();
+        $this->assertFalse($user instanceof \Tuiter\Models\UserNull);
+    }
+
+    public function testGetLoggedUserNotLogged() {
+        $userService = $this->createMock(UserService::class);
+        $userx = new User('Coco', 'Pepe Ventilete', '123456');
+        $userService->method('getUser')->willReturn($userx);
+
+        $ls = new \Tuiter\Services\LoginService($userService);
+        $user = $ls->getLoggedUser();
+        $this->assertTrue($user instanceof \Tuiter\Models\UserNull);
+    }
 }

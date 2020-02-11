@@ -28,24 +28,23 @@ $loginService = new \Tuiter\Services\LoginService($userService);
 
 $app = AppFactory::create();
 
-$app->get('/', function (Request $request, Response $response, array $args) use ($twig) {
-    
-    $template = $twig->load('index.html');
+$app->add(function($serverRequest, $requestHandler)
+            use ($twig, $loginService, $userService,
+            $postService, $likeService, $followService) {
+    $user = $loginService->getLoggedUser();
 
-    $response->getBody()->write(
-        $template->render(['name' => 'Dario'])
-    );
-    return $response;
+    $serverRequest = $serverRequest->withAttribute("user", $user);
+    $serverRequest = $serverRequest->withAttribute("twig", $twig);
+    $serverRequest = $serverRequest->withAttribute("userService", $userService);
+    $serverRequest = $serverRequest->withAttribute("loginService", $loginService);
+    $serverRequest = $serverRequest->withAttribute("followService", $followService);
+    $serverRequest = $serverRequest->withAttribute("likeService", $likeService);
+    $serverRequest = $serverRequest->withAttribute("postService", $postService);
+
+    return $requestHandler->handle($serverRequest);
 });
 
-$app->get('/contacto', function (Request $request, Response $response, array $args) use ($twig) {
-    
-    $template = $twig->load('contacto.html');
-
-    $response->getBody()->write(
-        $template->render(['name' => 'Dario'])
-    );
-    return $response;
-});
+$controllerService = new \Tuiter\Services\ControllerService();
+$controllerService->setup($app, __DIR__ . '/../src/Controllers/' );
 
 $app->run();

@@ -1,0 +1,14 @@
+{% extends 'feedBase.html' %}
+
+{% block tuits %}
+
+{% for post in posts %}
+<li>
+    <h4>post.owner</h4>
+    <p>
+        post.content
+    </p><br>
+</li>
+{% endfor %}
+
+{% endblock %}

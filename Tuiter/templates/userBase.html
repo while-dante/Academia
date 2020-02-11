@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tuiter - {{cabecera}}</title>
+</head>
+
+<body style="text-align: center;">
+    <a href="/feed">Feed</a>
+    <form action="/post" method="POST">
+        <label>Tuitea algo:</label><input type="text" name="content"><br>
+        <input type="submit" value="Tuitear">
+    </form>
+    <ul>
+        {% block tuits %}
+        {% endblock %}
+    </ul>
+</body>
+</html>

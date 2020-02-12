@@ -10,14 +10,14 @@ class UserNameController implements \Tuiter\Interfaces\Controller {
         $app->get('/{username}', function (Request $request, Response $response, array $args) {
             $userId = $args['username'];
             $userObject = $request->getAttribute("userService")->getUser($userId);
-
+            
             if(!($userObject instanceof \Tuiter\Models\UserNull)){
 
                 $postList = $request->getAttribute("postService")->getAllPosts($userObject);
     
-                $template = $request->getAttribute("twig")->load('feed.html');
+                $template = $request->getAttribute("twig")->load('/feed.html');
                 $response->getBody()->write(
-                    $template->render(['postList' => $postList])
+                    $template->render(['posts' => $postList])
                 );
                 return $response;
             }else{

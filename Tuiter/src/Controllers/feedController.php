@@ -5,8 +5,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 class feedController implements \Tuiter\Interfaces\Controller{
     public function config($app){
     $app->get('/feed', function (Request $request, Response $response, array $args)  {
-    $template = $request->getAttribute('twig')->load('index.html');
-    $allUsersFollowed = $request->getAttribute('followService')->getFollowed($request->getAttribute('user'));
+    $template = $request->getAttribute('twig')->load('feed.html');
+    $allUsersFollowed = $request->getAttribute('followService')->getFollowed($request->getAttribute('user')->getUserId());
     $allUsers= $allUsersFollowed;
     $allUsers[]=$request->getAttribute('user');
     $allpost = array();
@@ -21,7 +21,6 @@ class feedController implements \Tuiter\Interfaces\Controller{
 
     usort($allpost, $time_sort);
 
-    print_r($allpost);
     $response->getBody()->write(
         $template->render(['posts' => $allpost])
     );

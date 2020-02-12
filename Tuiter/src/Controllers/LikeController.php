@@ -17,7 +17,7 @@ class LikeController implements \Tuiter\Interfaces\Controller {
             $user = $loginService->getLoggedUser();
             $likeService->like($user,$post);
             $response = $response->withStatus(302);
-            $response = $response->withHeader("Location","/".$previousPage);
+            $response = $response->withHeader("Location", $previousPage);
             return $response;
         });
     }

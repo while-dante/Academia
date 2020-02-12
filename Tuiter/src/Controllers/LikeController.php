@@ -7,9 +7,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class LikeController implements \Tuiter\Interfaces\Controller {
     public function config($app){
-        $app->get('/like/{postId}&{from}', function (Request $request, Response $response, array $args) {
+        $app->get('/like/{postId}', function (Request $request, Response $response, array $args) {
             $postId=$args["postId"];
-            $previousPage = $args['from'];
+            $previousPage = $_GET['URL'];
             $likeService=$request->getAttribute("likeService");
             $postService=$request->getAttribute("postService");
             $loginService=$request->getAttribute("loginService");

@@ -72,6 +72,19 @@ final class LikeServiceTest extends \PHPUnit\Framework\TestCase {
         }
         $this->assertEquals(50+1, $this->ls->count($post));
     }
+    public function testUnlike(){
+        $user=new \Tuiter\Models\User("diegote","tom","lean");
+        $post=new \Tuiter\Models\Post("aoeu", "","tom",time());
+        $test= $this->ls->like($user,$post);
+        $this->assertTrue($test);
+        $this->assertTrue($this->ls->unlike($user,$post));
+    }
+    public function testUnlikeDeUnPostSinLikear(){
+        $this->assertFalse($this->ls->unlike(
+            new \Tuiter\Models\User("diegote","tom","lean"),
+            new \Tuiter\Models\Post("aoeu", "","tom",time())
+        ));
+    }
 
 
 

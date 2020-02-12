@@ -25,17 +25,17 @@ final class LikeServiceTest extends \PHPUnit\Framework\TestCase {
     public function testLike(){
         $test= $this->ls->like(
             new \Tuiter\Models\User("diegote","tom","lean"),
-            new \Tuiter\Models\Post("aoeu", "","tom")
+            new \Tuiter\Models\Post("aoeu", "","tom",time())
         );
         $this->assertIsBool($test);
         $this->assertTrue($test);
     }
     public function testCount(){
-        $post=new \Tuiter\Models\Post("oaeu", "","tom");
+        $post=new \Tuiter\Models\Post("oaeu", "","tom",time());
         $this->assertIsInt($this->ls->count($post));
     }
     public function testDarLikeYContar(){
-        $post=new \Tuiter\Models\Post("", "","tom");
+        $post=new \Tuiter\Models\Post("", "","tom",time());
         $likesAntes=$this->ls->count($post); 
         $this->assertTrue($this->ls->like(
             new \Tuiter\Models\User("diegote","tom","lean"),
@@ -44,7 +44,7 @@ final class LikeServiceTest extends \PHPUnit\Framework\TestCase {
         $this->assertEquals($likesAntes+1,$this->ls->count($post));
     }
     public function testDosLikesIguales(){
-        $post=new \Tuiter\Models\Post("", "","tom");
+        $post=new \Tuiter\Models\Post("", "","tom",time());
         $this->assertTrue($this->ls->like(
             new \Tuiter\Models\User("diegote","tom","lean"),
             $post
@@ -57,7 +57,7 @@ final class LikeServiceTest extends \PHPUnit\Framework\TestCase {
 
 
     public function testMuchosLikes() {
-        $post=new \Tuiter\Models\Post("", "","tom");
+        $post=new \Tuiter\Models\Post("", "","tom",time());
         $this->assertTrue($this->ls->like(
             new \Tuiter\Models\User("diegote","tom","lean"),
             $post

@@ -14,7 +14,7 @@ class IndexController implements \Tuiter\Interfaces\Controller {
             $template = $request->getAttribute("twig")->load('index.html');
 
             $response->getBody()->write(
-                $template->render(['name' => 'Dario'])
+                $template->render()
             );
             return $response;
         });

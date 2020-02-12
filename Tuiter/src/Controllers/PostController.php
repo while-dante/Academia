@@ -11,8 +11,7 @@ class PostController implements \Tuiter\Interfaces\Controller {
 
         $app->post('/post', function (Request $request, Response $response, array $args) {
             $ps = $request->getAttribute("postService");
-            $ls = $request->getAttribute("loginService");
-            $user = $ls->getLoggedUser();
+            $user = $request->getAttribute("user");
             $ps->create($_POST['post'], $user);
 
             $response = $response->withStatus(302);

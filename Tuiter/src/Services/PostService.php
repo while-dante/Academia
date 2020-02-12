@@ -69,15 +69,13 @@ class PostService {
         }
         return $posts;
     }
-    public function deletePost(Post $post){
-        $loginService = new LoginService(new UserService($this->collection));
-        $user = $loginService->getLoggedUser();
-        $confirm = $this->collection->deleteOne(
-            array(
-                "id" => $post->getPostId(),
-            )
-        );
-        if($confirm->getDeletedCount() == 1){
+    public function deletePost(Post $post,User $user){
+        if($user->getUserId() == $post->getUserId()){
+            $confirm = $this->collection->deleteOne(
+                array(
+                    "id" => $post->getPostId(),
+                )
+            );
             return True;
         }
         return False;

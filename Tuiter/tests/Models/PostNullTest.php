@@ -11,7 +11,7 @@ final class PostNullTest extends \PHPUnit\Framework\TestCase {
     }
 
     public function testCanCreateObj() {
-        $post = new PostNull("postId", "soyelcapo", "Juan Tuiter");
+        $post = new PostNull("postId", "soyelcapo", "Juan Tuiter",0);
 
         $this->assertTrue(is_subclass_of($post,"\Tuiter\Models\Post"));
         $this->assertEquals("null", $post->getPostId());

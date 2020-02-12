@@ -18,17 +18,19 @@ class PostService {
     public function create(string $content, User $user): Post{
         $userId = $user->getUserId();
         $postId = md5(microtime());
+        $time=time();
         $confirm = $this->collection->insertOne(
             array(
                 "id" => $postId,
                 "owner" => $userId,
-                "content" => $content
+                "content" => $content,
+                "time"=>$time
             )
         );
         if ($confirm->getInsertedCount() != 1){
-            return new PostNull($postId,$content,$userId);
+            return new PostNull($postId,$content,$userId,$time);
         }
-        return new Post($postId,$content,$userId);
+        return new Post($postId,$content,$userId,$time);
     }
 
     public function getPost(string $postId): Post{
@@ -37,12 +39,13 @@ class PostService {
         ));
 
         if ($postFound == null){
-            return new PostNull("null","null","null");
+            return new PostNull("null","null","null",0);
         }
         $newPost = new Post(
             $postFound["id"],
             $postFound["content"],
-            $postFound["owner"]
+            $postFound["owner"],
+            $postFound["time"]
         );
         return $newPost;
     }
@@ -58,7 +61,8 @@ class PostService {
             $newPost = new Post(
                 $post["id"],
                 $post["content"],
-                $post["owner"]
+                $post["owner"],
+                $post["time"]
             );
             $posts [] = $newPost;
         }

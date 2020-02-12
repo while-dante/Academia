@@ -7,11 +7,12 @@ class Post {
     protected $postId;
     protected $content;
     protected $userId;
-
-    public function __construct($postId,$content,string $userId){
+    protected $time;
+    public function __construct($postId,$content,string $userId,int $time){
         $this->postId = $postId;
         $this->content = $content;
         $this->userId = $userId;
+        $this->time=$time;
     }
 
     public function getPostId() :string{
@@ -22,5 +23,8 @@ class Post {
     }
     public function getUserId() :string{
         return $this->userId;
+    }
+    public function getTime() :int{
+        return $this->time;
     }
 }

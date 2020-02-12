@@ -17,6 +17,7 @@ final class PostTest extends \PHPUnit\Framework\TestCase {
         $this->assertEquals("postId", $post->getPostId());
         $this->assertEquals("soyelcapo", $post->getContent());
         $this->assertEquals("Juan Tuiter", $post->getUserId());
+        $this->assertIsInt($post->getTime());
     }
     
     public function testCanCreateAnotherObj() {
@@ -26,5 +27,6 @@ final class PostTest extends \PHPUnit\Framework\TestCase {
         $this->assertEquals("postId2", $post->getPostId());
         $this->assertEquals("soyelcapo2", $post->getContent());
         $this->assertEquals("Juan Tuiter2", $post->getUserId());
+        $this->assertIsInt($post->getTime());
     }
 }

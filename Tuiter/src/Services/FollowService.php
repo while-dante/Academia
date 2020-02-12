@@ -34,6 +34,19 @@ class FollowService {
         return false;
     }
 
+    public function unFollow($followerId, $followedId): bool{
+        $users = $this->getFollowed($followerId);
+        $idUsers = array();
+        foreach ($users as $user) {
+            $idUsers[] = $user->getUserId();
+        }
+        if(in_array($followedId, $idUsers)){
+            $this->collection->deleteOne(['followedId' => $followedId, 'followerId' => $followerId]);
+            return true;
+        }
+        return false;
+    }
+
     public function getFollowers($userId): array{
         $raw = $this->collection->find(array('followedId' => $userId));
         $followers = array();

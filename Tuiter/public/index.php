@@ -31,9 +31,10 @@ $app = AppFactory::create();
 $app->add(function($serverRequest, $requestHandler)
             use ($twig, $loginService, $userService,
             $postService, $likeService, $followService) {
-    $user = $loginService->getLoggedUser();
 
+    $user = $loginService->getLoggedUser();
     $serverRequest = $serverRequest->withAttribute("user", $user);
+    
     $serverRequest = $serverRequest->withAttribute("twig", $twig);
     $serverRequest = $serverRequest->withAttribute("userService", $userService);
     $serverRequest = $serverRequest->withAttribute("loginService", $loginService);

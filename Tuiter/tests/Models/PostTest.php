@@ -11,7 +11,7 @@ final class PostTest extends \PHPUnit\Framework\TestCase {
     }
 
     public function testCanCreateObj() {
-        $post = new Post("postId", "soyelcapo", "Juan Tuiter");
+        $post = new Post("postId", "soyelcapo", "Juan Tuiter",time());
 
         $this->assertTrue($post instanceof Post);
         $this->assertEquals("postId", $post->getPostId());
@@ -21,7 +21,7 @@ final class PostTest extends \PHPUnit\Framework\TestCase {
     }
     
     public function testCanCreateAnotherObj() {
-        $post = new Post("postId2", "soyelcapo2", "Juan Tuiter2");
+        $post = new Post("postId2", "soyelcapo2", "Juan Tuiter2",time());
 
         $this->assertTrue($post instanceof Post);
         $this->assertEquals("postId2", $post->getPostId());

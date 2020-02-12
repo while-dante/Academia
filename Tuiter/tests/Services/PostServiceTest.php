@@ -81,4 +81,11 @@ final class TestPostService extends \PHPUnit\Framework\TestCase {
         $this->assertEquals($postReturned1,$postReturned11);
         $this->assertEquals($postReturned2,$postReturned22);
     }
+    public function testDeletePost(){
+        $content = "Esto es un tuit";
+        $user1 = new User("user1","Juan Perez","pass");
+        $post = $this->pService->create($content,$user1);
+        $this->assertFalse(is_subclass_of($post,"\Tuiter\Models\Post"));
+        $this->assertTrue($this->pService->deletePost($post));
+    }
 }

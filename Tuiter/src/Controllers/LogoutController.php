@@ -17,5 +17,5 @@ class LogoutController implements \Tuiter\Interfaces\Controller {
 
     }
 
-    
+
 }

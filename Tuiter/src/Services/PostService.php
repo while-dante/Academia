@@ -5,7 +5,8 @@ namespace Tuiter\Services;
 use Tuiter\Models\User;
 use Tuiter\Models\Post;
 use Tuiter\Models\PostNull;
-
+use Tuiter\Services\LoginService;
+use Tuiter\Services\UserService;
 
 class PostService {
 
@@ -67,6 +68,17 @@ class PostService {
             $posts [] = $newPost;
         }
         return $posts;
+    }
+    public function deletePost(Post $post,User $user){
+        if($user->getUserId() == $post->getUserId()){
+            $confirm = $this->collection->deleteOne(
+                array(
+                    "id" => $post->getPostId(),
+                )
+            );
+            return True;
+        }
+        return False;
     }
 
 }

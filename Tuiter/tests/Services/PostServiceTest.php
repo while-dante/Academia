@@ -81,4 +81,39 @@ final class TestPostService extends \PHPUnit\Framework\TestCase {
         $this->assertEquals($postReturned1,$postReturned11);
         $this->assertEquals($postReturned2,$postReturned22);
     }
+    public function testReturnDeletePostOwner(){
+        $content = "Esto es un tuit";
+        $user1 = new User("user1","Juan Perez","pass");
+        $post = $this->pService->create($content,$user1);
+        $this->assertFalse(is_subclass_of($post,"\Tuiter\Models\Post"));
+        $this->assertTrue($this->pService->deletePost($post,$user1));
+    }
+
+    public function testReturnDeletePostNotOwner(){
+        $content = "Esto es un tuit";
+        $user1 = new User("user1","Juan Perez","pass");
+        $user2 = new User("user2","Juan Puedez","pasa");
+        $post = $this->pService->create($content,$user1);
+        $this->assertFalse(is_subclass_of($post,"\Tuiter\Models\Post"));
+        $this->assertFalse($this->pService->deletePost($post,$user2));
+    }
+
+    public function testDeletePostOwner(){
+        $content = "Esto es un tuit";
+        $user1 = new User("user1","Juan Perez","pass");
+        $post = $this->pService->create($content,$user1);
+        $this->assertEquals(array($post),$this->pService->getAllPosts($user1));
+        $this->pService->deletePost($post,$user1);
+        $this->assertEquals(array(),$this->pService->getAllPosts($user1));
+    }
+
+    public function testDeletePostNotOwner(){
+        $content = "Esto es un tuit";
+        $user1 = new User("user1","Juan Perez","pass");
+        $user2 = new User("user2","Juan Puedez","pasa");
+        $post = $this->pService->create($content,$user1);
+        $this->assertEquals(array($post),$this->pService->getAllPosts($user1));
+        $this->pService->deletePost($post,$user2);
+        $this->assertEquals(array($post),$this->pService->getAllPosts($user1));
+    }
 }

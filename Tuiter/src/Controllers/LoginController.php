@@ -4,25 +4,36 @@ namespace Tuiter\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Tuiter\Models\UserNull;
 
-class LoginController implements \Tuiter\Interfaces\Controller {
-
+class LoginController
+ implements \Tuiter\Interfaces\Controller {
+   
     public function config($app) {
 
-        $app->post('/login', function (Request $request, Response $response, array $args) {
-            
-            $user = $request->getAttribute("loginService")->login($_POST["userId"],$_POST["password"]);
-            $response = $response->withStatus(302);
+        $app->get('/login', function (Request $request, Response $response, array $args) {
+    
+            $template = $request->getAttribute("twig")->load('index.html');
+            $response->getBody()->write(
+                $template->render([])
+            );
+            return $response;
+        });
 
-            if(!$user instanceof \Tuiter\Models\UserNull){
-                return $response->withHeader("Location", "/feed");
+        $app->post('/login', function (Request $request, Response $response, array $args) {
+    
+            $login = $request->getAttribute("loginService")->login($_POST['userId'], $_POST['password']);
+            if (!($login instanceof \Tuiter\Models\UserNull)){
+                
+                $template = $request->getAttribute("twig")->load('feed.html');
+                $response->getBody()->write(
+                    $template->render(['user' => $request->getAttribute("user")->getName(), 'login' => $request->getAttribute('login')])
+                );
+                return $response;
             }
-            else{
-                return $response->withHeader("Location", "/");
-            }
+
+            return $response;
         });
 
     }
-
-
 }

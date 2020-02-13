@@ -32,6 +32,7 @@
     padding: 10px;
     line-height: 15px;
     margin-top: 30px;
+    background-color: white;
 }
 
 .likes{
@@ -136,17 +137,17 @@ figure {
 
 ::-webkit-selection {
     color: #fff;
-    background: #09C6AB;
+    background: rgb(47, 198, 9);
 }
 
 ::-moz-selection {
     color: #fff;
-    background: #09C6AB;
+    background: rgb(9, 198, 40);
 }
 
 ::selection {
     color: #fff;
-    background: #09C6AB;
+    background: rgb(9, 198, 18);
 }
 
 .gtco-container {

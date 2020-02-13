@@ -2,12 +2,7 @@
 
 {% block content %}
 
-<form action="/post" method="post">
-<label>Posteo</label><input type="text" name="post" />
-<input type="submit" value="Enviar">
-</form>
-
-<header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="background-image: url(images/img_bg_2.jpg)">
+<header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="background-image: url(/images/img_bg_2.jpg)">
     <div class="overlay"></div>
     <div class="gtco-container">
         <div class="row">
@@ -18,26 +13,30 @@
                 
                     <div>
                         <h3>Crea un nuevo post</h3>
-                        <input type="text" class="newPost" placeholder="Escribe tu post aca" >
+                        <form action="/post" method="POST">
+                            <input type="text" class="newPost" name="post" placeholder="Escribe tu post aca" >
+                            <input type="submit" value="Enviar">
+                        </form>
                     </div>
                     <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
                         <div class="form-wrap" id="tuitsBox2" >
                             <div class="tab">
 
                                 
-                                <div class="tab-content" id="tuitsBox">
-                                    <h3>Tuits</h3>
+                                <div class="tab-content" id="tuitsBox" style="background-image: url(/images/chat.jpg)">
+                                    <h3 style="color: white;">Tuits</h3>
                                     <p>A divertirse!!!!</p>
 
                                     {% for post in posts %}
                                     
                                     <div class="postBox">
                                         <h4 class="userNamePost">{{post.getUserId()}}</h4>
+                                        <h6>{{post.getDate()}}</h6>
                                         <p>
-                                            
                                            <span style="font-weight: bold;">Message -</span> {{post.getContent()}}
                                         </p>
                                         <div class="likes">
+                                            <a>{{cycle(likes, loop.index)}}</a>
                                             <a href="/like/{{post.getPostId()}}?URL=/user/me"><i class="fas fa-thumbs-up"></i></a>
                                             <a href="#"><i class="fas fa-thumbs-down"></i></a>
                                         </div>

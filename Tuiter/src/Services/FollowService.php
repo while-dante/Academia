@@ -3,6 +3,7 @@
 namespace Tuiter\Services;
 
 use \Tuiter\Services\UserService;
+use \Tuiter\Models\User;
 
 class FollowService {
 
@@ -14,7 +15,7 @@ class FollowService {
         $this->userService = $userService;
     }
 
-    public function follow($follower, $followed): bool{
+    public function follow(User $follower, User $followed): bool{
         $followerId = $follower->getUserId();
         $followedId = $followed->getUserId();
         $users = $this->getFollowed($follower);
@@ -36,7 +37,7 @@ class FollowService {
         return false;
     }
 
-    public function unFollow($follower, $followed): bool{
+    public function unFollow(User $follower, User $followed): bool{
         $followerId = $follower->getUserId();
         $followedId = $followed->getUserId();
         $users = $this->getFollowed($follower);
@@ -51,7 +52,7 @@ class FollowService {
         return false;
     }
 
-    public function getFollowers($user): array{
+    public function getFollowers(User $user): array{
         $userId = $user->getUserId();
         $raw = $this->collection->find(array('followedId' => $userId));
         $followers = array();
@@ -61,7 +62,7 @@ class FollowService {
         return $followers;
     }
 
-    public function getFollowed($user): array{
+    public function getFollowed(User $user): array{
         $userId = $user->getUserId();
         $raw = $this->collection->find(array('followerId' => $userId));
         $followed = array();

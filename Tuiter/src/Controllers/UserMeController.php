@@ -15,7 +15,11 @@ class UserMeController implements \Tuiter\Interfaces\Controller {
             $template = $request->getAttribute("twig")->load('/feed.html');
             $user = $request->getAttribute("user");
             $posts= $request->getAttribute("postService")->getAllPosts($user);
-
+            
+            foreach ($posts as $post) {
+                $post->likes = $request->getAttribute('likeService')->count($post);
+            }
+            
             $response->getBody()->write(
                 $template->render(['posts' =>  $posts, 'user' => $request->getAttribute("user")->getName(), 'login' => $request->getAttribute('login')])
             );

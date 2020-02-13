@@ -10,11 +10,10 @@ class FeedController implements \Tuiter\Interfaces\Controller{
     $allUsers= $allUsersFollowed;
     $allUsers[]=$request->getAttribute('user');
     $allpost = array();
-    $allLikes = array();
     foreach ($allUsers as $v) {
         foreach ($request->getAttribute('postService')->getAllPosts($v) as $p) {
             $allpost[] = $p;
-            $allLikes[] = $request->getAttribute('likeService')->count($p);
+            $p->likes = $request->getAttribute('likeService')->count($p);
         }
     }
     $time_sort = function ($a, $b){

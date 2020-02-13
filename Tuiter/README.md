@@ -6,19 +6,23 @@ Una red social que permite registar usuarios, logear usuarios, que cada usuario
 registrado va a poder postear, dar likes a posts y seguir a otros usuarios.  
 
 Links:
-Get:/  => Home --|_ Login
-Get:/  => Home --|_ Registro
-Get:/logOut
-Get:/user/me => (Nuestros Post)
-Get:/feed
-Get:/{userName}
-Get:/follow/{userName}
-Get:/unFollow/{userName}
-Get:/like/{postId}
-Get:/unLike/{postId}
-Post:/logIn
-Post:/register
-Post:/newPost
+Get: /  => Home --|_ Login
+Get: /  => Home --|_ Registro
+Get: /logOut
+Get: /user/me => (Nuestros Post)
+Get: /feed
+Get: /{userName}
+Get: /follow/{userName}
+Get: /unFollow/{userName}
+Get: /like/{postId}
+Get: /unLike/{postId}
+Post: /logIn
+Post: /register
+Post: /newPost
+Get: /deletePost/{postId}
+Get: /verPost/{postId}
+Get: /verComentarios/{postId}
+Post: /comentar/{postId}
 
 Services:
 
@@ -43,15 +47,19 @@ Services:
 -LikeService -> Metodos:
     -like(User, Post) : Bool
     -count(Post) : int
-              
+
+-CommentService -> Metodos:
+    -create(Content, User, Post) : Comentario
+    -getCommentFromPost(Post) : array(Comentario)
+
 Actors:
 
--User/UserNotFound = Datos:
+-User/UserNull = Datos:
     -UserId
     -Name
     -Password
        
--Post = Datos:
+-Post/PostNull = Datos:
     -PostId
     -Content
     -UserId
@@ -65,3 +73,10 @@ Actors:
     -FollowId
     -FollowerId
     -FollowedId
+
+-Comment/CommentNull = Datos:
+    -Content
+    -IdOwner
+    -Time
+    -IdPost
+    -IdComment

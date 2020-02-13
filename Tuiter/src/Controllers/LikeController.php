@@ -12,10 +12,26 @@ class LikeController implements \Tuiter\Interfaces\Controller {
             $previousPage = $_GET['URL'];
             $likeService=$request->getAttribute("likeService");
             $postService=$request->getAttribute("postService");
-            $loginService=$request->getAttribute("loginService");
             $post = $postService->getPost($postId);
-            $user = $loginService->getLoggedUser();
-            $likeService->like($user,$post);
+            $user = $request->getAttribute('user');
+            $fueLikeado=$likeService->like($user,$post);
+            if(!$fueLikeado)
+            {
+                $response = $response->withStatus(302)->withHeader("Location","/unlike/$postId ?URL=$previousPage");
+                return $response;
+            }
+            $response = $response->withStatus(302);
+            $response = $response->withHeader("Location", $previousPage);
+            return $response;
+        });
+        $app->get('/unlike/{postId}', function (Request $request, Response $response, array $args) {
+            $postId=$args["postId"];
+            $previousPage = $_GET['URL'];
+            $likeService=$request->getAttribute("likeService");
+            $postService=$request->getAttribute("postService");
+            $post = $postService->getPost($postId);
+            $user = $request->getAttribute('user');
+            $likeService->unlike($user,$post);
             $response = $response->withStatus(302);
             $response = $response->withHeader("Location", $previousPage);
             return $response;

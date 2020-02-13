@@ -45,4 +45,22 @@ class LikeService
     {
         return $this->collection->count(array("postId"=>$post->getPostId()));
     }
+    /**
+     * Busca en la base de datos si hay un like que corresponda 
+     * con el usuario y el post que se reciben, si existe lo elimina.
+     * @param \Tuiter\Models\User $user Este es el usuario que intenta deslikear.
+     * @param \Tuiter\Models\Post $post Este es el posteo a deslikear.
+     * @return Bool Devuelve True si la operacion fue exitosa y False en caso 
+     * contrario.
+     */
+    public function unlike(\Tuiter\Models\User $user,\Tuiter\Models\Post $post):bool{
+        $unLike=new \Tuiter\Models\Like($post->getPostId(),$user->getUserId());
+        if(!($this->likeExist($unLike))){
+            return false;
+        }
+        $delete=$this->collection->deleteOne(array(
+            'likeId'=>$unLike->getLikeId()
+        ));
+        return true;
+    }
 }

@@ -6,7 +6,7 @@ class FeedController implements \Tuiter\Interfaces\Controller{
     public function config($app){
     $app->get('/feed', function (Request $request, Response $response, array $args)  {
     $template = $request->getAttribute('twig')->load('feed.html');
-    $allUsersFollowed = $request->getAttribute('followService')->getFollowed($request->getAttribute('user')->getUserId());
+    $allUsersFollowed = $request->getAttribute('followService')->getFollowed($request->getAttribute('user'));
     $allUsers= $allUsersFollowed;
     $allUsers[]=$request->getAttribute('user');
     $allpost = array();
@@ -22,7 +22,7 @@ class FeedController implements \Tuiter\Interfaces\Controller{
 
     usort($allpost, $time_sort);
     $response->getBody()->write(
-        $template->render(['posts' => $allpost, 'login' => $request->getAttribute('login'), 'user' => $request->getAttribute("user")->getName(), 'likes' => $allLikes])
+        $template->render(['posts' => $allpost, 'login' => $request->getAttribute('login'), 'user' => $request->getAttribute("user")->getName(), 'current_user' => $request->getAttribute("user")->getName()])
     );
     return $response;
 });

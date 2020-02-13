@@ -21,7 +21,7 @@ class UserMeController implements \Tuiter\Interfaces\Controller {
             }
             
             $response->getBody()->write(
-                $template->render(['posts' =>  $posts, 'user' => $request->getAttribute("user")->getName(), 'login' => $request->getAttribute('login')])
+                $template->render(['posts' =>  $posts, 'user' => $request->getAttribute("user")->getName(), 'login' => $request->getAttribute('login'), 'current_user' => $request->getAttribute("user")->getName()])
             );
             return $response;
         });

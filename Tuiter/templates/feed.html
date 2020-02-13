@@ -24,7 +24,8 @@
 
                                 
                                 <div class="tab-content" id="tuitsBox" style="background-image: url(/images/chat.jpg)">
-                                    <h3 style="color: white;">Tuits</h3>
+                                    <h3 style="color: white;">Tuits de {{ current_user.getName() }}</h3>
+                                    <a href="/follow/{{ current_user.getUserId() }}"><i class="fas fa-user-plus"></i></a>
                                     <p>A divertirse!!!!</p>
 
                                     {% for post in posts %}

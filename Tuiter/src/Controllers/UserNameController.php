@@ -21,7 +21,7 @@ class UserNameController implements \Tuiter\Interfaces\Controller {
     
                 $template = $request->getAttribute("twig")->load('/feed.html');
                 $response->getBody()->write(
-                    $template->render(['posts' => $posts, 'user' => $request->getAttribute("user")->getName(),'login' => $request->getAttribute('login')])
+                    $template->render(['posts' => $posts, 'user' => $request->getAttribute("user")->getName(),'login' => $request->getAttribute('login'), 'current_user'=> $userObject])
                 );
                 return $response;
             }else{

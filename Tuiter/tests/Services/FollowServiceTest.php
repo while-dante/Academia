@@ -14,6 +14,18 @@ final class FollowServiceTest extends \PHPUnit\Framework\TestCase {
         $collectionUserService->drop();
         $this->us = new \Tuiter\Services\UserService($collectionUserService);
         $this->fs = new \Tuiter\Services\FollowService($collection, $this->us);
+        $this->us->register("eliel", "Heber", "123456");
+        $this->us->register("edu", "Edward", "123456");
+        $this->us->register("diego", "Edward", "123456");
+        $this->us->register("nico", "Edward", "123456");
+        $this->us->register("rober", "Edward", "123456");
+        $this->us->register("fran", "Edward", "123456");
+        $this->eliel = $this->us->getUser("eliel");
+        $this->edu = $this->us->getUser("edu");
+        $this->diego = $this->us->getUser("diego");
+        $this->nico = $this->us->getUser("nico");
+        $this->rober = $this->us->getUser("rober");
+        $this->fran = $this->us->getUser("fran");
     }
 
     public function testClassExists(){
@@ -21,37 +33,37 @@ final class FollowServiceTest extends \PHPUnit\Framework\TestCase {
     }
     
     public function testFollow(){
-        $eliel = new \Tuiter\Models\User("eliel", "Heber", "1234");
-        $edu = new \Tuiter\Models\User("edu", "Edward", "1234");
-        
-        $this->us->register("eliel", "Heber", "123456");
-        $this->us->register("edu", "Edward", "123456");
-        
-        $this->assertTrue($this->fs->follow("eliel","edu"));
-        $this->assertFalse($this->fs->follow("eliel","edu"));
+        $this->assertTrue($this->fs->follow($this->eliel,$this->edu));
+        $this->assertFalse($this->fs->follow($this->eliel,$this->edu));
     }
 
     public function testGetFollowers(){
-        $this->assertTrue($this->fs->follow("eliel","edu"));
-        $this->assertCount(1,$this->fs->getFollowers("edu"));
+        $this->assertTrue($this->fs->follow($this->eliel,$this->edu));
+        $this->assertCount(1,$this->fs->getFollowers($this->edu));
     }
 
     public function testGetMasFollowers(){
-        $this->assertTrue($this->fs->follow("eliel","edu"));
-        $this->assertTrue($this->fs->follow("diego","edu"));
-        $this->assertTrue($this->fs->follow("nico","edu"));
-        $this->assertCount(3,$this->fs->getFollowers("edu"));
+        $this->assertTrue($this->fs->follow($this->eliel,$this->edu));
+        $this->assertTrue($this->fs->follow($this->diego,$this->edu));
+        $this->assertTrue($this->fs->follow($this->nico,$this->edu));
+        $this->assertCount(3,$this->fs->getFollowers($this->edu));
     }
 
     public function testGetFollowed(){
-        $this->assertTrue($this->fs->follow("eliel","edu"));
-        $this->assertCount(1,$this->fs->getFollowed("eliel"));
+        $this->assertTrue($this->fs->follow($this->eliel,$this->edu));
+        $this->assertCount(1,$this->fs->getFollowed($this->eliel));
     }
 
     public function testGetMasFollowed(){
-        $this->assertTrue($this->fs->follow("eliel","fran"));
-        $this->assertTrue($this->fs->follow("eliel","nico"));
-        $this->assertTrue($this->fs->follow("eliel","rober"));
-        $this->assertCount(3,$this->fs->getFollowed("eliel"));
+        $this->assertTrue($this->fs->follow($this->eliel,$this->fran));
+        $this->assertTrue($this->fs->follow($this->eliel,$this->nico));
+        $this->assertTrue($this->fs->follow($this->eliel,$this->rober));
+        $this->assertCount(3,$this->fs->getFollowed($this->eliel));
+    }
+
+    public function testUnfollow(){
+        $this->assertTrue($this->fs->follow($this->eliel,$this->edu));
+        $this->assertCount(1, $this->fs->getFollowers($this->edu));
+        $this->assertTrue($this->fs->unFollow($this->eliel,$this->edu));
     }
 }

@@ -18,5 +18,15 @@ class FollowController implements \Tuiter\Interfaces\Controller {
                 $response = $response->withHeader("Location","/".$userId);
             return $response;
         });
+        $app->get('/unFollow/{username}', function (Request $request, Response $response, array $args) {
+            $userId=$args["username"];
+            $followService=$request->getAttribute("followService");
+            $loginService=$request->getAttribute("loginService");
+            $followService->follow($loginService->getLoggedUser()->getUserId(),$userId);
+            $response = $response->withStatus(302);
+            $response = $response->withHeader("Location","/".$userId);
+            return $response;
+        });
+
     }
 }

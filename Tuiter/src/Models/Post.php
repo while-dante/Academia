@@ -27,4 +27,8 @@ class Post {
     public function getTime() :int{
         return $this->time;
     }
+    public function getDate(){
+        return date('D/M/Y H:i:s', $this->time);
+    }
+    
 }

@@ -41,6 +41,7 @@ $app->add(function($serverRequest, $requestHandler)
     $serverRequest = $serverRequest->withAttribute("followService", $followService);
     $serverRequest = $serverRequest->withAttribute("likeService", $likeService);
     $serverRequest = $serverRequest->withAttribute("postService", $postService);
+    $serverRequest = $serverRequest->withAttribute('login', !$user instanceof \Tuiter\Models\UserNull);
 
     return $requestHandler->handle($serverRequest);
 });

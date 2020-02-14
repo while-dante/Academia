@@ -4,10 +4,10 @@ namespace Tuiter\Services;
 
 class UserService {
 
-    private $collection;
+    private $collections;
 
-    public function __construct($collection){
-        $this->collection= $collection;
+    public function __construct(array $collections){
+        $this->collections = $collections;
     }
     
     public function register(string $userId, string $name, string $password) {
@@ -17,14 +17,14 @@ class UserService {
             $usuarios['userId']= $userId;
             $usuarios['name']= $name;
             $usuarios['password']=$password;
-            $this->collection->insertOne($usuarios);
+            $this->collections[0]->insertOne($usuarios);
             return true;
         } else {
             return false;
         }
     }
     public function getUser($userId){
-        $cursor= $this->collection->findOne(['userId'=> $userId]);
+        $cursor= $this->collections[0]->findOne(['userId'=> $userId]);
         if (is_null($cursor)){
             $user = new \Tuiter\Models\UserNull('','','');
             return $user;

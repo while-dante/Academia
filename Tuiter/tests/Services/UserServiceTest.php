@@ -5,13 +5,18 @@ namespace TestTuiter\Services;
 use \Tuiter\Services\UserService;
 
 final class UserServiceTest extends \PHPUnit\Framework\TestCase {
-    private $collection;
+    private $collections;
 
     protected function setUp(): void{
         $conn = new \MongoDB\Client("mongodb://localhost");
-        $this->collection = $conn->tuiter->usuarios;
-        $this->collection->drop();
-        $this->collections = array($this->collection);
+        $this->collections = array();
+        
+        for($i=0;$i<5;$i++){
+            $tuiterName = "tuiter".$i;
+            $collection = $conn->$tuiterName->usuarios;
+            $collection->drop();
+            $this->collections[] = $collection;
+        }
     }
 
 
@@ -53,4 +58,15 @@ final class UserServiceTest extends \PHPUnit\Framework\TestCase {
         $this->assertEquals($user->getUserId(), 'Null');
     }
 
+    public function testRegister1000Users(){
+        $us = new UserService($this->collections);
+        for ($i=0;$i<1000;$i++){
+            $us->register("user".$i,"1234","name");
+        }
+        for ($i=0;$i<1000;$i++){
+            $userFetched = $us->getUser("user".$i)->getUserId();
+            $userExpected = "user".$i;
+            $this->assertEquals($userExpected,$userFetched);
+        }
+    }
 }
